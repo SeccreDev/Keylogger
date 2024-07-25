@@ -24,7 +24,7 @@
     <ProjectGuid>{9604cfcc-cfe1-4d07-ba69-32197693c3ba}</ProjectGuid>
     <RootNamespace>Keylogger</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>src</ProjectName>
+    <ProjectName>Keylogger</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
