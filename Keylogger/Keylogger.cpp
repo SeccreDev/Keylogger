@@ -425,7 +425,7 @@ void checkForLowerCase(int &key)
 	bool capslockPressed = ((GetKeyState(VK_CAPITAL) & 0x0001) != 0);
 
 	// Shift is pressed when the high-order bit is 1
-	bool shiftPressed = ((GetKeyState(VK_SHIFT) & 0x1000) != 0);
+	bool shiftPressed = ((GetKeyState(VK_SHIFT) & 0x8000) != 0);
 
 	// Converts uppercase character to lowercase
 	if (!capslockPressed && !shiftPressed) // When capslock and shift are not pressed
