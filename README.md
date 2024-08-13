@@ -2,9 +2,9 @@
 ## Description
 The keylogger records all the keystrokes of the system and stores it in a log file.
 ## Features
-*Keystroke Logging: Records all keystrokes made on the keyboard.
-*Stealth Mode: Runs silently in the background without alerting the user.
-*Log File Creation: Saves captured keystrokes in a log file.
+* Keystroke Logging: Records all keystrokes made on the keyboard.
+* Stealth Mode: Runs silently in the background without alerting the user.
+* Log File Creation: Saves captured keystrokes in a log file.
 
 ## To be added
 Screenshot Capture: Captures screenshots at regular intervals.
