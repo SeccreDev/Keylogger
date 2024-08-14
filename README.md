@@ -12,4 +12,5 @@ Screenshot Capture: Captures screenshots at regular intervals.
 ## Installation
 
 ## Disclaimer
-This keylogger is designed for educational purposes only. It should be used solely for learning about cybersecurity, ethical hacking, and how to defend against keylogging attacks. Unauthorized use of this software to monitor or collect information from others without their consent is illegal and unethical. Please ensure that you have explicit permission to use this tool in any environment where it is deployed. I am not to be held responsible for the use of this program.
+This keylogger is designed for educational purposes only. It should be used solely for learning about cybersecurity, ethical hacking, and how to defend against keylogging attacks. Unauthorized use of this software to monitor or collect information from others without their consent is illegal and unethical. Please ensure that you have explicit permission to use this tool in any environment where it is deployed.
+This project is provided as-is, without any warranty. The author is not responsible for any misuse of this software. By using this software, you agree to use it responsibly and within the bounds of the law.
