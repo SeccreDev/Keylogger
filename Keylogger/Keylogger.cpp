@@ -19,7 +19,7 @@ const bool HIDECONSOLE = false;
 /*
 	Set the screenshot interval in seconds
 */
-const int SECONDS = 60;
+const int SECONDS = 120;
 
 // Function Prototypes
 template <class T>
@@ -485,7 +485,8 @@ void takeScreenShot()
 		// Format the filename with date and time
 		char buffer[100];
 		strftime(buffer, sizeof(buffer), "screenshot_%Y-%m-%d_%H;%M;%S", &local_tm);
-		string filename = "./screenshots/" + string(buffer) + ".png";
+		string filename = string(buffer) + ".png";
+		//string filename = "./screenshots/" + string(buffer) + ".png";
 
 		// Get screen dimensions
 		int x1 = GetSystemMetrics(SM_XVIRTUALSCREEN);
